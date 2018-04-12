@@ -1,0 +1,9 @@
+---
+title: "TSE Filiados"
+date: "12 de abril de 2018"
+output: github_document
+---
+
+Repositório com script para download dos arquivos do TSE sobre os filiados.
+
+As funções desenvolvidas aqui tiveram como referência o [repositório](https://github.com/nataliabueno/filiados_TSE) desenvolvido pela Natália Bueno.
