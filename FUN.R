@@ -34,6 +34,7 @@ get_affiliates <- function(uf, party){
 }
 
 unzip_affiliates <- function(uf, party, dir = "./data"){
+  
   safe_unzip <- purrr::safely(unzip)
   
   zip_file <- sprintf("%s/%s/%s/file.zip", dir, uf, party)
