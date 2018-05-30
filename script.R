@@ -40,4 +40,18 @@ log_unzip %>%
   .$error %>% 
   compact()
 
+##1.3. Build Data
+
 data <- build_data(args$uf, args$party)
+
+data <- transpose(data)
+
+for(i  in seq_along(data$result)){
+  data$result <- data$result[[i]] %>% 
+    mutate(`NUMERO DA INSCRICAO` = as.character(`NUMERO DA INSCRICAO`))
+}
+
+data <- bind_rows(data$result)
+
+# write_rds(data, "filiados.rds")
+# write_csv(data, "filiados.csv")

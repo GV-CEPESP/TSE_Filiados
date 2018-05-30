@@ -76,8 +76,6 @@ build_data <- function(uf_vec, party_vec){
     purrr::map(dplyr::mutate, TIPO = "sub_jud")
   
   full_list <- append(filiados_ls, sub_jud_ls)
-  
-  dplyr::bind_rows(full_list)
 }
 
 
