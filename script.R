@@ -47,8 +47,10 @@ data <- build_data(args$uf, args$party)
 data <- transpose(data)
 
 for(i  in seq_along(data$result)){
-  data$result <- data$result[[i]] %>% 
-    mutate(`NUMERO DA INSCRICAO` = as.character(`NUMERO DA INSCRICAO`))
+  if(!is.null(data$result[[i]])){
+    data$result[[i]] <- data$result[[i]] %>% 
+      mutate(`NUMERO DA INSCRICAO` = as.character(`NUMERO DA INSCRICAO`))
+  }
 }
 
 data <- bind_rows(data$result)
