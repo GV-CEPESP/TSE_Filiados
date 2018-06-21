@@ -1,3 +1,7 @@
+# Script de Limpeza dos Bancos de Dados
+
+rm(list = ls())
+
 library(tidyverse)
 
 filiados <- read_rds("filiados.rds")
