@@ -26,6 +26,7 @@ filiados <- filiados %>%
 filiados <- filiados %>% 
   select(NUMERO_INSCRICAO, NOME_FILIADO, SIGLA_PARTIDO, NOME_PARTIDO, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, DATA_ENTRADA, DATA_SAIDA)
 
+write_rds(filiados[1:10000], "filiados_test.rds")
 ## 1.3. Consistência
 
 ### 1.3.1. Teste de Repetições
@@ -37,15 +38,6 @@ NUM <- filiados$NUMERO_INSCRICAO_INT
 
 NUM <- unique(NUM)
 
-overlap_detect <- function(entrada1,saida1,entrada2,saida2){
-  # Essa função testa se dois pares de datas de entrada e saída possuem
-  # uma sobreposição.
-}
-  
-overlap_count <- function(){
-  # Essa função faz uma contagem de sobreposições de datas de filiação para
-  # cada numero de inscrição
-}
 
 # Nesta seção, o objetivo é testar a existência de mais de uma filiação para uma pessoa
 # em um mesmo período de tempo.
