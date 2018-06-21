@@ -28,9 +28,10 @@ filiados <- filiados %>%
          NUMERO_INSCRICAO_INT = as.numeric(NUMERO_INSCRICAO))
 
 filiados <- filiados %>% 
-  select(NUMERO_INSCRICAO, NOME_FILIADO, SIGLA_PARTIDO, NOME_PARTIDO, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, DATA_ENTRADA, DATA_SAIDA)
+  select(NUMERO_INSCRICAO, NUMERO_INSCRICAO_INT, NOME_FILIADO, SIGLA_PARTIDO, NOME_PARTIDO, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, DATA_ENTRADA, DATA_SAIDA)
 
-write_rds(filiados[1:10000], "filiados_test.rds")
+write_rds(filiados[1:10000,], "filiados_test.rds")
+
 ## 1.3. Consistência
 
 ### 1.3.1. Teste de Repetições
