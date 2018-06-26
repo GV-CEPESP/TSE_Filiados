@@ -21,9 +21,7 @@ glimpse(filiados)
 
 filiados <- filiados %>% 
   mutate(DATA_ENTRADA = parse_date(DATA_FILIACAO, format = "%d/%m/%Y"),
-         DATA_SAIDA   = case_when(!is.na(DATA_DESFILIACAO) ~ DATA_DESFILIACAO,
-                                  !is.na(DATA_CANCELAMENTO)~ DATA_CANCELAMENTO,
-                                  T                        ~ "19/07/2018"),
+         DATA_SAIDA   = ifelse(!is.na(DATA_DESFILIACAO), DATA_DESFILIACAO, NA),
          DATA_SAIDA   = parse_date(DATA_SAIDA, format = "%d/%m/%Y"),
          NUMERO_INSCRICAO_INT = as.numeric(NUMERO_INSCRICAO))
 
@@ -32,17 +30,19 @@ filiados <- filiados %>%
 
 write_rds(filiados[1:10000,], "filiados_test.rds")
 
-## 1.3. Consistência
 
-### 1.3.1. Teste de Repetições
+# 2. Consistência ---------------------------------------------------------
+
+## 2.1. Teste de Repetições
 
 filiados %>% 
   count(NUMERO_INSCRICAO)
 
-NUM <- filiados$NUMERO_INSCRICAO_INT
-
-NUM <- unique(NUM)
-
-
 # Nesta seção, o objetivo é testar a existência de mais de uma filiação para uma pessoa
 # em um mesmo período de tempo.
+
+
+# 3. Consertos ------------------------------------------------------------
+
+
+
