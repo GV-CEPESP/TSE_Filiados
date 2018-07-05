@@ -21,15 +21,18 @@ glimpse(filiados)
 
 filiados <- filiados %>% 
   mutate(DATA_ENTRADA = parse_date(DATA_FILIACAO, format = "%d/%m/%Y"),
-         DATA_SAIDA   = ifelse(!is.na(DATA_DESFILIACAO), DATA_DESFILIACAO, NA),
-         DATA_SAIDA   = parse_date(DATA_SAIDA, format = "%d/%m/%Y"),
          NUMERO_INSCRICAO_INT = as.numeric(NUMERO_INSCRICAO))
+
+filiados <- filiados %>% 
+  mutate(DATA_SAIDA = case_when(!is.na(DATA_DESFILIACAO)  ~ DATA_DESFILIACAO,
+                                !is.na(DATA_CANCELAMENTO) ~ DATA_CANCELAMENTO,
+                                T                         ~ NA_character_),
+         DATA_SAIDA = parse_date(DATA_SAIDA, format = "%d/%m/%Y"))
 
 filiados <- filiados %>% 
   select(NUMERO_INSCRICAO, NUMERO_INSCRICAO_INT, NOME_FILIADO, SIGLA_PARTIDO, NOME_PARTIDO, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, DATA_ENTRADA, DATA_SAIDA)
 
 write_rds(filiados[1:10000,], "filiados_test.rds")
-
 
 # 2. Consistência ---------------------------------------------------------
 
@@ -41,8 +44,14 @@ filiados %>%
 # Nesta seção, o objetivo é testar a existência de mais de uma filiação para uma pessoa
 # em um mesmo período de tempo.
 
-
 # 3. Consertos ------------------------------------------------------------
 
+## 3.1. Atribuinda novas datas de saída a partir de outras filiações
 
+filiados <- filiados %>% 
+  group_by(NUMERO_INSCRICAO_INT) %>% 
+  arrange(NUMERO_INSCRICAO_INT, DATA_ENTRADA) %>% 
+  mutate(DATA_SAIDA = lead(DATA_ENTRADA) - 1,
+         DATA_SAIDA = ifelse(!is.na(DATA_SAIDA), DATA_SAIDA, as.Date("2018-07-05")))
 
+write_rds(filiados, "filiados_new.rds")
