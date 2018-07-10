@@ -31,8 +31,6 @@ filiados <- filiados %>%
 filiados <- filiados %>% 
   select(NUMERO_INSCRICAO, NOME_FILIADO, SIGLA_PARTIDO, NOME_PARTIDO, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, DATA_ENTRADA, DATA_SAIDA)
 
-write_rds(filiados[1:10000,], "filiados_test.rds")
-
 # 2. Consistência ---------------------------------------------------------
 
 ## 2.1. Teste de Repetições
@@ -52,5 +50,7 @@ filiados <- filiados %>%
   arrange(NUMERO_INSCRICAO, DATA_ENTRADA) %>% 
   mutate(DATA_SAIDA = lead(DATA_ENTRADA) - 1,
          DATA_SAIDA = ifelse(!is.na(DATA_SAIDA), DATA_SAIDA, as.Date("2018-07-05")))
+
+write_rds(filiados[1:10000,], "filiados_test.rds")
 
 write_rds(filiados, "filiados_new.rds")
